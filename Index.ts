@@ -1,16 +1,15 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from "./prisma";
 
-
-import { createStation, getAllStations } from "./models/station";
-import { createTrain, getAllTrains } from "./models/train";
-import { createTrip, getAllTrips } from "./models/trip";
+import { seedStations } from "./prisma/seeds/station";
+import { seedTrains } from "./prisma/seeds/train";
+import { seedTrips } from "./prisma/seeds/trips";
 
 async function main() {
 
-  console.log("Stations:", await getAllStations());
-  console.log("Trains:", await getAllTrains());
-  console.log("Trips:", await getAllTrips());
+  await seedStations();
+  await seedTrains();
+  await seedTrips();
+  
 }
 
 main()
