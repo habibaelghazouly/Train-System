@@ -2,6 +2,9 @@
   "name": "enozom-intern",
   "version": "1.0.0",
   "main": "index.js",
+  "prisma":{
+    "schema": "./prisma"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon Index.ts"
@@ -22,6 +25,7 @@
     "@types/node": "^24.3.0",
     "nodemon": "^3.1.10",
     "prisma": "^6.14.0",
+    "prisma-schema-import": "^1.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
   },

@@ -1,0 +1,10 @@
+
+model Trip{
+  id            Int      @id @default(autoincrement())
+  station_id    Int
+  train_id      Int
+  station_order Int
+
+  Station Station @relation(fields: [station_id], references: [id])
+  Train   Train   @relation(fields: [train_id], references: [id])
+}
