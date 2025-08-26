@@ -12,3 +12,25 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Station{
+  id        Int      @id @default(autoincrement())
+  name      String   
+  trips     Trip[]
+}
+
+model Train{
+  id        Int      @id @default(autoincrement())
+  name      String   
+  trips     Trip[]
+}
+
+model Trip{
+  id            Int      @id @default(autoincrement())
+  station_id    Int
+  train_id      Int
+  station_order Int
+
+  Station Station @relation(fields: [station_id], references: [id])
+  Train   Train   @relation(fields: [train_id], references: [id])
+}
