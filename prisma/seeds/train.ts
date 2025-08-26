@@ -10,6 +10,7 @@ export async function seedTrains() {
       { name: "Train 3" },
       { name: "Train 4" },
       { name: "Train 5" },
+      { name: "Train 6" },
     ],
     skipDuplicates: true,
   });

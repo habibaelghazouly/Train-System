@@ -8,8 +8,8 @@ async function main() {
 
   await seedStations();
   await seedTrains();
-  await seedTrips();
-  
+  await seedTrips(); 
+
 }
 
 main()

@@ -30,11 +30,7 @@ export async function seedTrips() {
         {station_id: 5 , train_id: 5, station_order: 1},
         {station_id: 5 , train_id: 6, station_order: 1},
 
-
-
-
     ],
-    skipDuplicates: true,
   });
 
   console.log("✅ Trips seeded!");
