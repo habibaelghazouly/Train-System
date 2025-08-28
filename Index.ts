@@ -1,11 +1,11 @@
-// import prisma from "./prisma";
+import express from "express";
+import stationRoutes from "./routes/stations.routes";
 
+const app = express();
 
-// async function main() {
-// }
+app.use(express.json());
 
-// main()
-//   .catch(console.error)
-//   .finally(async () => await (await import("./prisma")).default.$disconnect());
+// Routes
+app.use("/", stationRoutes);
 
-// export default prisma;
+export default app;
