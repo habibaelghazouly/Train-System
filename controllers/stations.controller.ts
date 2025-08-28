@@ -3,7 +3,7 @@ import * as stationService from "../services/stations.service";
 import { StationResponseDto } from "../dtos/station.dto";
 
 // GET all stations
-export async function getStations(req: Request, res: Response) {
+async function getStations(req: Request, res: Response) {
   try {
     const stations = await stationService.getAllStations();
     const response = StationResponseDto.fromEntities(stations);
