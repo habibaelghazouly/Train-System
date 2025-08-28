@@ -1,11 +1,11 @@
-import prisma from "./prisma";
+// import prisma from "./prisma";
 
 
-async function main() {
-}
+// async function main() {
+// }
 
-main()
-  .catch(console.error)
-  .finally(async () => await (await import("./prisma")).default.$disconnect());
+// main()
+//   .catch(console.error)
+//   .finally(async () => await (await import("./prisma")).default.$disconnect());
 
-export default prisma;
+// export default prisma;

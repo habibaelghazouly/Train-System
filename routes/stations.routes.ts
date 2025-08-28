@@ -1,8 +1,8 @@
 import { Router } from "express";
-import getAllStations from "../controllers/stations.controller";
+import getStations from "../controllers/stations.controller";
 
 
 const router = Router();
-router.get('/', getAllStations);
+router.get('/', getStations);
 
 export default router;
