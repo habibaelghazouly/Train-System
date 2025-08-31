@@ -1,0 +1,19 @@
+{
+	"info": {
+		"_postman_id": "944d8e30-29f2-4cbf-89d8-ac779589a361",
+		"name": "TrainSystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47859257",
+		"_collection_link": "https://habiba-houssam-s-team.postman.co/workspace/Team-Workspace~74b4d3c7-839f-4aaf-85ef-4c3059b0298b/collection/47859257-944d8e30-29f2-4cbf-89d8-ac779589a361?action=share&source=collection_link&creator=47859257"
+	},
+	"item": [
+		{
+			"name": "allStations",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

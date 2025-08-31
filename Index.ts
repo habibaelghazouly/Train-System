@@ -1,11 +1,14 @@
-import prisma from "./prisma";
+import express from "express";
+import stationRoutes from "./routes/stations.routes";
+import tripRoutes from "./routes/trips.routes";
 
 
-async function main() {
-}
+const app = express();
 
-main()
-  .catch(console.error)
-  .finally(async () => await (await import("./prisma")).default.$disconnect());
+app.use(express.json());
 
-export default prisma;
+// Routes
+app.use("/", stationRoutes);
+app.use("/trips", tripRoutes);
+
+export default app;

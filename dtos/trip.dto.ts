@@ -1,0 +1,17 @@
+export class TripResponseDto {
+  train_id: number;
+  train_name: string;
+  start_city: number;
+  dest_city: number;
+
+  constructor(data: any) {
+    this.train_id = data.train_id;
+    this.train_name = data.train_name;
+    this.start_city = data.start_city;
+    this.dest_city = data.dest_city;
+  }
+
+  static fromEntities(trips: any[]): TripResponseDto[] {
+    return trips.map(trip => new TripResponseDto(trip));
+  }
+}
