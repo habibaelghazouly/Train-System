@@ -14,6 +14,24 @@ export class StationResponseDto {
   }
 }
 
+// GET station by id
+export class getStationResponseDto {
+  id: number;
+  name: string;
+
+  constructor(train: any) {
+    this.id = train.id;
+    this.name = train.name;
+  }
+
+  static fromEntity(train: any): getStationResponseDto {
+    return new getStationResponseDto(train);
+  }
+}
+
+
+
+
 //POST new station
 import { Station } from "@prisma/client";
 

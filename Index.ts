@@ -10,6 +10,7 @@ app.use(express.json());
 // Routes
 app.use("/all", stationRoutes);
 app.use("/new", stationRoutes);
+app.use("/station", stationRoutes);
 
 app.use("/trips", tripRoutes);
 

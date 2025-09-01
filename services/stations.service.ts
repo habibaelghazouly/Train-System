@@ -8,6 +8,13 @@ export async function getAllStations() {
   });
 }
 
+// GET station by ID
+export async function getStationById(id: number) {
+  return prisma.station.findUnique({
+    where: { id },
+  });
+}
+
 // POST new station
 export async function addStation(data: { name: string }) {
   try {
