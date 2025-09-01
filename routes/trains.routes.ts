@@ -1,8 +1,12 @@
 import { Router } from "express";
-import getTrains from "../controllers/trains.controller";
-
+import * as trainController from "../controllers/trains.controller";
 
 const router = Router();
-router.get('/trains', getTrains);
+
+// GET all trains
+router.get('/trains', trainController.getTrains);
+
+// POST new train
+router.post("/train", trainController.createTrain);
 
 export default router;

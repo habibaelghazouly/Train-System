@@ -1,8 +1,13 @@
 import { Router } from "express";
-import getStations from "../controllers/stations.controller";
-
+import * as stationController from "../controllers/stations.controller";
 
 const router = Router();
-router.get('/stations', getStations);
+
+// GET all stations
+router.get('/stations', stationController.getStations);
+
+// POST new station
+router.post("/station", stationController.createStation);
+
 
 export default router;

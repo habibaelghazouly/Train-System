@@ -3,7 +3,7 @@ import * as tripService from "../services/trips.service";
 import { TripResponseDto } from "../dtos/trip.dto";
 
 // GET the available trips between two stations
-async function searchTrips(req: Request, res: Response) {
+export async function searchTrips(req: Request, res: Response) {
   try {
 
     const fromStationId = Number(req.query.fromStationId);
@@ -24,4 +24,3 @@ async function searchTrips(req: Request, res: Response) {
     res.status(500).json({ error: "Failed to fetch trips", details: error });
   }
 }
-export default searchTrips;

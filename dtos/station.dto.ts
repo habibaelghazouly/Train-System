@@ -1,3 +1,5 @@
+//GET all stations
+
 export class StationResponseDto {
   id: number;
   name: string;
@@ -11,3 +13,22 @@ export class StationResponseDto {
     return stations.map(station => new StationResponseDto(station));
   }
 }
+
+//POST new station
+import { Station } from "@prisma/client";
+
+export class newStationResponseDto {
+  id: number;
+  name: string;
+
+  constructor(id: number, name: string) {
+    this.id = id;
+    this.name = name;
+  }
+
+  static fromEntity(station : Station): newStationResponseDto {
+    return new newStationResponseDto(station.id, station.name);
+  }
+
+}
+
