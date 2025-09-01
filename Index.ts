@@ -9,9 +9,13 @@ app.use(express.json());
 
 // Routes
 app.use("/all", stationRoutes);
-app.use("/trips", tripRoutes);
 app.use("/new", stationRoutes);
-app.use("/new", trainRoutes);
+
+app.use("/trips", tripRoutes);
+
 app.use("/all", trainRoutes);
+app.use("/new", trainRoutes);
+app.use("/train", trainRoutes);
+
 
 export default app;

@@ -8,6 +8,14 @@ export async function getAllTrains() {
   });
 }
 
+// GET train by ID
+export async function getTrainById(id: number) {
+  return prisma.train.findUnique({
+    where: { id },
+  });
+}
+
+
 // POST new train
 export async function addTrain(data: { name: string }) {
   try {

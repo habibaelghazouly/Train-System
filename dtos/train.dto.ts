@@ -1,5 +1,4 @@
-//GET all trains
-
+// GET all trains
 export class TrainResponseDto {
   id: number;
   name: string;
@@ -14,7 +13,22 @@ export class TrainResponseDto {
   }
 }
 
-//POST new train
+// GET train by ID
+export class getTrainResponseDto {
+  id: number;
+  name: string;
+
+  constructor(train: any) {
+    this.id = train.id;
+    this.name = train.name;
+  }
+
+  static fromEntity(train: any): getTrainResponseDto {
+    return new getTrainResponseDto(train);
+  }
+}
+
+// POST new train
 import { Train } from "@prisma/client";
 
 export class newTrainResponseDto {

@@ -13,7 +13,27 @@ export async function getTrains(req: Request, res: Response) {
   }
 }
 
-//POST new train
+// GET train by ID
+export async function getTrain(req: Request, res: Response) {
+  try {
+    const trainId = Number(req.params.id);
+    if (!trainId) {
+      return res.status(400).json({ error: "Invalid train ID" });
+    }
+
+    const train = await trainService.getTrainById(trainId);
+    if (!train) {
+      return res.status(404).json({ error: "Train not found" });
+    }
+
+    const response = trainDto.getTrainResponseDto.fromEntity(train);
+    res.json(response);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch trains" });
+  }
+}
+
+// POST new train
  export async function createTrain(req: Request, res: Response) {
   try {
     const { name } = req.body;
