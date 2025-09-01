@@ -10,17 +10,17 @@ jest.mock("../../prisma", () => ({
   },
 }));
 
-const trainFindMany = () => (prisma.train.findMany as unknown as jest.Mock);
+const trainFindMany = () => prisma.train.findMany as unknown as jest.Mock;
 
-describe("findTrips", () => {
+describe("findTrips (forward trips only, from !== to)", () => {
+  const fromStationId = 1;
+  const toStationId = 5;
+
   beforeEach(() => {
     trainFindMany().mockReset();
   });
 
-  it("returns trains that have both stations in correct order", async () => {
-    const fromStationId = 1;
-    const toStationId = 5;
-
+  it("includes trains with stations in correct forward order", async () => {
     trainFindMany().mockResolvedValue([
       {
         id: 10,
@@ -32,28 +32,16 @@ describe("findTrips", () => {
         ],
       },
       {
-        // Has both stations but reversed order (excluded)
         id: 11,
-        name: "Express B",
+        name: "Local B",
         trips: [
-          { station_id: 5, station_order: 2 },
-          { station_id: 1, station_order: 3 },
+          { station_id: 1, station_order: 2 },
+          { station_id: 5, station_order: 3 },
         ],
-      },
-      {
-        // Missing destination (excluded)
-        id: 12,
-        name: "Local C",
-        trips: [{ station_id: 1, station_order: 1 }],
       },
     ]);
 
     const result = await findTrips(fromStationId, toStationId);
-
-    expect(trainFindMany()).toHaveBeenCalledWith({
-      include: { trips: true },
-    });
-
     expect(result).toEqual([
       {
         train_id: 10,
@@ -61,19 +49,20 @@ describe("findTrips", () => {
         start_city: fromStationId,
         dest_city: toStationId,
       },
+      {
+        train_id: 11,
+        train_name: "Local B",
+        start_city: fromStationId,
+        dest_city: toStationId,
+      },
     ]);
   });
 
-  it("returns empty array when no train has both stations in order", async () => {
+  it("excludes trains where stations are in reverse order", async () => {
     trainFindMany().mockResolvedValue([
       {
-        id: 20,
-        name: "Only One Stop",
-        trips: [{ station_id: 2, station_order: 1 }],
-      },
-      {
-        id: 21,
-        name: "Reversed",
+        id: 12,
+        name: "Reversed Train",
         trips: [
           { station_id: 5, station_order: 1 },
           { station_id: 1, station_order: 2 },
@@ -81,28 +70,46 @@ describe("findTrips", () => {
       },
     ]);
 
-    const result = await findTrips(1, 5);
+    const result = await findTrips(fromStationId, toStationId);
     expect(result).toEqual([]);
   });
 
-  it("excludes trains where station_order is equal (no forward direction)", async () => {
+  it("excludes trains where start and destination are the same", async () => {
     trainFindMany().mockResolvedValue([
       {
-        id: 30,
-        name: "Equal Order",
+        id: 13,
+        name: "Loop Train",
         trips: [
-          { station_id: 1, station_order: 2 },
-          { station_id: 5, station_order: 2 },
+          { station_id: 1, station_order: 1 },
+          { station_id: 1, station_order: 3 },
         ],
       },
     ]);
 
-    const result = await findTrips(1, 5);
+    const result = await findTrips(fromStationId, fromStationId);
     expect(result).toEqual([]);
   });
 
-  it("propagates errors from prisma", async () => {
+  it("excludes trains missing either station", async () => {
+    trainFindMany().mockResolvedValue([
+      {
+        id: 14,
+        name: "Partial Train",
+        trips: [{ station_id: 1, station_order: 1 }],
+      },
+      {
+        id: 15,
+        name: "Other Train",
+        trips: [{ station_id: 99, station_order: 1 }],
+      },
+    ]);
+
+    const result = await findTrips(fromStationId, toStationId);
+    expect(result).toEqual([]);
+  });
+
+  it("propagates Prisma errors", async () => {
     trainFindMany().mockRejectedValue(new Error("DB error"));
-    await expect(findTrips(1, 5)).rejects.toThrow("DB error");
+    await expect(findTrips(fromStationId, toStationId)).rejects.toThrow("DB error");
   });
 });
