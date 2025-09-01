@@ -27,7 +27,7 @@ describe("getAllStations", () => {
     // Assert
     expect(prisma.station.findMany).toHaveBeenCalledWith({
       distinct: ["name"],
-      orderBy: { id: "asc" },
+      orderBy: { name: "asc" },
     });
     expect(result).toEqual(mockStations);
   });
