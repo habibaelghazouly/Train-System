@@ -7,16 +7,14 @@ const app = express();
 
 app.use(express.json());
 
-// Routes
-app.use("/all", stationRoutes);
-app.use("/new", stationRoutes);
-app.use("/station", stationRoutes);
+// Station routes
+app.use("/stations", stationRoutes);
 
+// Trip routes
 app.use("/trips", tripRoutes);
 
-app.use("/all", trainRoutes);
-app.use("/new", trainRoutes);
-app.use("/train", trainRoutes);
+// Train routes
+app.use("/trains", trainRoutes);
 
 
 export default app;
