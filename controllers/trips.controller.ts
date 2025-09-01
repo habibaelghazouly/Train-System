@@ -14,6 +14,9 @@ async function searchTrips(req: Request, res: Response) {
     }
 
     const trips = await tripService.findTrips(fromStationId, toStationId);
+    if (trips.length === 0) {
+      return res.status(404).json({ message: "No trips found between the specified stations" });
+    }   
     const response = TripResponseDto.fromEntities(trips);
 
     res.json(response);
