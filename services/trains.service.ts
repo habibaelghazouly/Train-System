@@ -31,3 +31,10 @@ export async function updateTrain(id: number, data: { name?: string }) {
     data,
   });
 }
+
+// DELETE a train
+export async function deleteTrain(id: number) {
+  return prisma.train.delete({
+    where: { id },
+  });
+}

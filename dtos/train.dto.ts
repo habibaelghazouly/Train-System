@@ -60,3 +60,18 @@ export class updateTrainResponseDto {
     return new updateTrainResponseDto(train);
   }
 }
+
+// DELETE train
+export class deleteTrainResponseDto {
+  id: number;
+  name: string;
+
+  constructor(train: any) {
+    this.id = train.id;
+    this.name = train.name;
+  }
+
+  static fromEntity(train: any): deleteTrainResponseDto {
+    return new deleteTrainResponseDto(train);
+  }
+}

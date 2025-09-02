@@ -15,4 +15,7 @@ router.post("/new", trainController.createTrain);
 // Update/edit a train
 router.patch("/:id", trainController.updateTrain);
 
+// DELETE a train
+router.delete("/:id", trainController.deleteTrain);
+
 export default router;

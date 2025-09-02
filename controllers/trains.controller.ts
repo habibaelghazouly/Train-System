@@ -63,9 +63,30 @@ export async function updateTrain(req: Request, res: Response) {
     if (!name || typeof name !== "string" || name.trim() === "") {
       return res.status(400).json({ error: "Train name is required" });
     }
-    
+
     const train = await trainService.updateTrain(trainId, { name: name?.trim() });
     const response = trainDto.updateTrainResponseDto.fromEntity(train);
+
+    res.json(response);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// DELETE train
+export async function deleteTrain(req: Request, res: Response) {
+  try {
+    const trainId = Number(req.params.id);
+    if (!trainId) {
+      return res.status(400).json({ error: "Invalid train ID" });
+    }
+
+    const train = await trainService.deleteTrain(trainId);
+    if (!train) {
+      return res.status(404).json({ error: "Train not found" });
+    }
+    
+    const response = trainDto.deleteTrainResponseDto.fromEntity(train);
 
     res.json(response);
   } catch (error: any) {
