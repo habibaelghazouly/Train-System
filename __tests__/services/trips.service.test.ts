@@ -1,4 +1,4 @@
-import { findTrips } from "../../services/trips.service";
+import { findTrips , getTripById } from "../../services/trips.service";
 import prisma from "../../prisma";
 import { Train, Trip } from "@prisma/client";
 
@@ -8,10 +8,34 @@ jest.mock("../../prisma", () => ({
     train: {
       findMany: jest.fn(),
     },
+    trip: {
+      findUnique: jest.fn(),
+    },
   },
 }));
 
-// shortcut for typed mock
+// GET trip by id
+describe("getTripById", () => {
+    it("should return a trip by id", async () => {
+      const mockTrip = { id: 1, station_id: 2, station_order: 1 };
+      (prisma.trip.findUnique as jest.Mock).mockResolvedValue(mockTrip);
+
+      const result = await getTripById(1);
+
+      expect(prisma.trip.findUnique).toHaveBeenCalledWith({ where: { id: 1 } });
+      expect(result).toEqual(mockTrip);
+    });
+
+    it("should return null if trip not found", async () => {
+      (prisma.trip.findUnique as jest.Mock).mockResolvedValue(null);
+
+      const result = await getTripById(999);
+
+      expect(result).toBeNull();
+    });
+  });
+
+// Get all
 const trainFindMany = prisma.train.findMany as jest.MockedFunction<typeof prisma.train.findMany>;
 
 describe("findTrips service", () => {
