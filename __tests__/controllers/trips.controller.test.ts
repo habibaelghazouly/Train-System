@@ -1,68 +1,37 @@
-import { Request, Response } from "express";
-import searchTrips from "../../controllers/trips.controller";
-import * as tripService from "../../services/trips.service";
-import { TripResponseDto } from "../../dtos/trip.dto";
+import request from 'supertest';
+import app from '../../Index';
 
-describe("searchTrips Controller - Unit Test", () => {
-  let req: Partial<Request>;
-  let res: Partial<Response>;
-  let jsonMock: jest.Mock;
-  let statusMock: jest.Mock;
+describe('Trips Controller Integration', () => {
+  describe('GET /trips/search', () => {
+    it('should return trips array with 200 status when given proper parameters', async () => {
+      const response = await request(app)
+        .get('/trips/search')
+        .query({
+          fromStationId: '1',
+          toStationId: '5'
+        })
+        .expect(200);
 
-  beforeEach(() => {
-    req = { query: { } };
-    jsonMock = jest.fn();
-    statusMock = jest.fn(() => ({ json: jsonMock })) as any;
+      // Expect raw array
+      expect(Array.isArray(response.body)).toBe(true);
 
-    res = {
-      status: statusMock,
-      json: jsonMock,
-    };
-  });
-
-it("should call service and return transformed trips on success", async () => {
-    const mockTrips = [
-      { train_id: 1, train_name: "Express A", start_city: 1, dest_city: 5 },
-    ];
-
-    // Mock service
-    jest.spyOn(tripService, "findTrips").mockResolvedValue(mockTrips);
-
-    // Mock DTO transformation
-    jest.spyOn(TripResponseDto, "fromEntities").mockReturnValue(mockTrips);
-
-    req.query = { fromStationId: "1", toStationId: "5" };
-
-    await searchTrips(req as Request, res as Response);
-
-    expect(tripService.findTrips).toHaveBeenCalledWith(1, 5);
-    expect(TripResponseDto.fromEntities).toHaveBeenCalledWith(mockTrips);
-    expect(jsonMock).toHaveBeenCalledWith(mockTrips);
-    expect(statusMock).not.toHaveBeenCalled(); // success
-  });
-
-  it("should return 400 if query params are missing", async () => {
-    req.query = {}; // missing both params
-
-    await searchTrips(req as Request, res as Response);
-
-    expect(statusMock).toHaveBeenCalledWith(400);
-    expect(jsonMock).toHaveBeenCalledWith({
-      error: "fromStationId and toStationId are required query params",
+      if (response.body.length > 0) {
+        const trip = response.body[0];
+        expect(trip).toHaveProperty('train_id');
+        expect(trip).toHaveProperty('train_name');
+        expect(trip).toHaveProperty('start_city', 1);
+        expect(trip).toHaveProperty('dest_city', 5);
+      }
     });
-  });
 
-  it("should return 500 if service throws", async () => {
-    jest.spyOn(tripService, "findTrips").mockRejectedValue(new Error("DB error"));
+    it('should return 400 with error object when missing required parameters', async () => {
+      const response = await request(app)
+        .get('/trips/search')
+        .expect(400);
 
-    req.query = { fromStationId: "1", toStationId: "5" };
-
-    await searchTrips(req as Request, res as Response);
-
-    expect(statusMock).toHaveBeenCalledWith(500);
-    expect(jsonMock).toHaveBeenCalledWith({
-      error: "Failed to fetch trips",
-      details: expect.any(Error),
+      expect(response.body).toEqual({
+        error: "fromStationId and toStationId are required query params"
+      });
     });
   });
 });

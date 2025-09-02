@@ -1,5 +1,6 @@
 import { findTrips } from "../../services/trips.service";
 import prisma from "../../prisma";
+import { Train, Trip } from "@prisma/client";
 
 jest.mock("../../prisma", () => ({
   __esModule: true,
@@ -10,18 +11,19 @@ jest.mock("../../prisma", () => ({
   },
 }));
 
-const trainFindMany = () => prisma.train.findMany as unknown as jest.Mock;
+// shortcut for typed mock
+const trainFindMany = prisma.train.findMany as jest.MockedFunction<typeof prisma.train.findMany>;
 
-describe("findTrips (forward trips only, from !== to)", () => {
+describe("findTrips service", () => {
   const fromStationId = 1;
   const toStationId = 5;
 
   beforeEach(() => {
-    trainFindMany().mockReset();
+    jest.clearAllMocks();
   });
 
   it("includes trains with stations in correct forward order", async () => {
-    trainFindMany().mockResolvedValue([
+    trainFindMany.mockResolvedValue([
       {
         id: 10,
         name: "Express A",
@@ -39,7 +41,7 @@ describe("findTrips (forward trips only, from !== to)", () => {
           { station_id: 5, station_order: 3 },
         ],
       },
-    ]);
+    ] as any);
 
     const result = await findTrips(fromStationId, toStationId);
     expect(result).toEqual([
@@ -59,7 +61,7 @@ describe("findTrips (forward trips only, from !== to)", () => {
   });
 
   it("excludes trains where stations are in reverse order", async () => {
-    trainFindMany().mockResolvedValue([
+    trainFindMany.mockResolvedValue([
       {
         id: 12,
         name: "Reversed Train",
@@ -68,14 +70,14 @@ describe("findTrips (forward trips only, from !== to)", () => {
           { station_id: 1, station_order: 2 },
         ],
       },
-    ]);
+    ] as any);
 
     const result = await findTrips(fromStationId, toStationId);
     expect(result).toEqual([]);
   });
 
   it("excludes trains where start and destination are the same", async () => {
-    trainFindMany().mockResolvedValue([
+    trainFindMany.mockResolvedValue([
       {
         id: 13,
         name: "Loop Train",
@@ -84,14 +86,14 @@ describe("findTrips (forward trips only, from !== to)", () => {
           { station_id: 1, station_order: 3 },
         ],
       },
-    ]);
+    ] as any);
 
     const result = await findTrips(fromStationId, fromStationId);
     expect(result).toEqual([]);
   });
 
   it("excludes trains missing either station", async () => {
-    trainFindMany().mockResolvedValue([
+    trainFindMany.mockResolvedValue([
       {
         id: 14,
         name: "Partial Train",
@@ -102,14 +104,22 @@ describe("findTrips (forward trips only, from !== to)", () => {
         name: "Other Train",
         trips: [{ station_id: 99, station_order: 1 }],
       },
-    ]);
+    ] as any);
+
+    const result = await findTrips(fromStationId, toStationId);
+    expect(result).toEqual([]);
+  });
+
+  it("returns empty array if no trains in DB", async () => {
+    trainFindMany.mockResolvedValue([]);
 
     const result = await findTrips(fromStationId, toStationId);
     expect(result).toEqual([]);
   });
 
   it("propagates Prisma errors", async () => {
-    trainFindMany().mockRejectedValue(new Error("DB error"));
+    trainFindMany.mockRejectedValue(new Error("DB error"));
+
     await expect(findTrips(fromStationId, toStationId)).rejects.toThrow("DB error");
   });
 });
