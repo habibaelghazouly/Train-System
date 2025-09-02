@@ -60,7 +60,10 @@ export async function updateTrain(req: Request, res: Response) {
     }
 
     const { name } = req.body;
-
+    if (!name || typeof name !== "string" || name.trim() === "") {
+      return res.status(400).json({ error: "Train name is required" });
+    }
+    
     const train = await trainService.updateTrain(trainId, { name: name?.trim() });
     const response = trainDto.updateTrainResponseDto.fromEntity(train);
 
