@@ -12,8 +12,8 @@ router.get("/:id", tripController.getTrip);
 // POST trip
 router.post("/new", tripController.createTrip);
 
-// // PATCH a trip
-// router.patch("/:id", tripController.updateTrip);
+// PATCH a trip
+router.patch("/:id", tripController.updateTrip);
 
 // // DELETE a trip
 // router.delete("/:id", tripController.deleteTrip);

@@ -39,3 +39,15 @@ export async function addTrip(data: { stationId: number; trainId: number; statio
     },
   });
 }
+
+// PATCH/edit a trip
+export async function updateTrip(id: number, data: { stationId: number; trainId: number; stationOrder: number }) {
+  return prisma.trip.update({
+    where: { id },
+    data: {
+      station_id: data.stationId,
+      train_id: data.trainId,
+      station_order: data.stationOrder,
+    },
+  });
+}

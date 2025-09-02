@@ -55,3 +55,21 @@ export class newTripResponseDto {
   }
 }
   
+// PATCH/edit a trip
+export class updateTripResponseDto {
+  id: number;
+  stationID: number;
+  trainID: number;
+  stationOrder: number;
+
+  constructor(trip: any) {
+    this.id = trip.id;
+    this.stationID = trip.station_id;
+    this.trainID = trip.train_id;
+    this.stationOrder = trip.station_order;
+  }
+
+  static fromEntity(trip: any): updateTripResponseDto {
+    return new updateTripResponseDto(trip);
+  }
+}

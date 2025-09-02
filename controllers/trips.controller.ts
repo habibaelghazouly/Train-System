@@ -66,3 +66,24 @@ export async function createTrip(req: Request, res: Response) {
   }
 }
 
+// PATCH a trip
+export async function updateTrip(req: Request, res: Response) {
+  try {
+    const tripId = Number(req.params.id);
+    if (!tripId) {
+      return res.status(400).json({ error: "Invalid trip ID" });
+    }
+
+    const { stationId, trainId, stationOrder } = req.body;
+    if (!stationId || !trainId || !stationOrder) {
+      return res.status(400).json({ error: "stationId, trainId and stationOrder are required" });
+    }
+
+    const trip = await tripService.updateTrip(tripId, { stationId, trainId, stationOrder });
+    const response = tripDto.updateTripResponseDto.fromEntity(trip);
+
+    res.json(response);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+}
