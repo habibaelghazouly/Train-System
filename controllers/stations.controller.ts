@@ -73,3 +73,25 @@ export async function updateStation(req: Request, res: Response) {
     res.status(500).json({ error: error.message });
   }
 }
+
+
+// DELETE station
+export async function deleteStation(req: Request, res: Response) {
+  try {
+    const stationId = Number(req.params.id);
+    if (!stationId) {
+      return res.status(400).json({ error: "Invalid station ID" });
+    }
+
+    const station = await stationService.deleteStation(stationId);
+    if (!station) {
+      return res.status(404).json({ error: "Station not found" });
+    }
+
+    const response = stationDto.deleteStationResponseDto.fromEntity(station);
+
+    res.json(response);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+}

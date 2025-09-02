@@ -62,3 +62,17 @@ export class updateStationResponseDto {
   }
 }
 
+// DELETE station
+export class deleteStationResponseDto {
+  id: number;
+  name: string;
+
+  constructor(station: any) {
+    this.id = station.id;
+    this.name = station.name;
+  }
+
+  static fromEntity(station: any): deleteStationResponseDto {
+    return new deleteStationResponseDto(station);
+  }
+}

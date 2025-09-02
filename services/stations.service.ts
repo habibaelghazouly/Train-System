@@ -31,3 +31,10 @@ export async function updateStation(id: number, data: { name?: string }) {
     data,
   });
 }
+
+// DELETE a station
+export async function deleteStation(id: number) {
+  return prisma.station.delete({
+    where: { id },
+  });
+}
