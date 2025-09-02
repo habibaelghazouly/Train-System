@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as trainService from "../services/trains.service";
-import  * as trainDto from "../dtos/train.dto";
+import * as trainDto from "../dtos/train.dto";
 
 // GET all trains
 export async function getTrains(req: Request, res: Response) {
@@ -29,12 +29,12 @@ export async function getTrain(req: Request, res: Response) {
     const response = trainDto.getTrainResponseDto.fromEntity(train);
     res.json(response);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch trains" });
+    res.status(500).json({ error: "Failed to fetch train" });
   }
 }
 
 // POST new train
- export async function createTrain(req: Request, res: Response) {
+export async function createTrain(req: Request, res: Response) {
   try {
     const { name } = req.body;
 
@@ -51,3 +51,21 @@ export async function getTrain(req: Request, res: Response) {
   }
 }
 
+// PATCH update train
+export async function updateTrain(req: Request, res: Response) {
+  try {
+    const trainId = Number(req.params.id);
+    if (!trainId) {
+      return res.status(400).json({ error: "Invalid train ID" });
+    }
+
+    const { name } = req.body;
+
+    const train = await trainService.updateTrain(trainId, { name: name?.trim() });
+    const response = trainDto.updateTrainResponseDto.fromEntity(train);
+
+    res.json(response);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+}

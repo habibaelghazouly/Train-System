@@ -12,4 +12,7 @@ router.get("/:id", trainController.getTrain);
 // POST new train
 router.post("/new", trainController.createTrain);
 
+// Update/edit a train
+router.patch("/:id", trainController.updateTrain);
+
 export default router;

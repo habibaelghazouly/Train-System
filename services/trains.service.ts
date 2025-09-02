@@ -15,17 +15,19 @@ export async function getTrainById(id: number) {
   });
 }
 
-
 // POST new train
 export async function addTrain(data: { name: string }) {
-  try {
-    const train = await prisma.train.create({
-      data: {
-        name: data.name,
-      },
-    });
-    return train;
-  } catch (error) {
-    throw error; 
-  }
+  return prisma.train.create({
+    data: {
+      name: data.name,
+    },
+  });
+}
+
+// PATCH update/edit a train
+export async function updateTrain(id: number, data: { name?: string }) {
+  return prisma.train.update({
+    where: { id },
+    data,
+  });
 }

@@ -45,3 +45,18 @@ export class newTrainResponseDto {
   }
 
 }
+
+// Update/edit a train
+export class updateTrainResponseDto {
+  id: number;
+  name: string;
+
+  constructor(train: any) {
+    this.id = train.id;
+    this.name = train.name;
+  }
+
+  static fromEntity(train: any): updateTrainResponseDto {
+    return new updateTrainResponseDto(train);
+  }
+}
