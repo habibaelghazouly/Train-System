@@ -15,7 +15,7 @@ router.post("/new", tripController.createTrip);
 // PATCH a trip
 router.patch("/:id", tripController.updateTrip);
 
-// // DELETE a trip
-// router.delete("/:id", tripController.deleteTrip);
+// DELETE a trip
+router.delete("/:id", tripController.deleteTrip);
 
 export default router;

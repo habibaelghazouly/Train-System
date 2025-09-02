@@ -51,3 +51,10 @@ export async function updateTrip(id: number, data: { stationId: number; trainId:
     },
   });
 }
+
+// DELETE a trip
+export async function deleteTrip(id: number) {
+  return prisma.trip.delete({
+    where: { id },
+  });
+}

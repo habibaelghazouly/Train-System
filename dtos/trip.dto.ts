@@ -73,3 +73,16 @@ export class updateTripResponseDto {
     return new updateTripResponseDto(trip);
   }
 }
+
+// DELETE a trip
+export class deleteTripResponseDto {
+  id: number;
+
+  constructor(trip: any) {
+    this.id = trip.id;
+  }
+
+  static fromEntity(trip: any): deleteTripResponseDto {
+    return new deleteTripResponseDto(trip);
+  }
+}

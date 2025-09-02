@@ -87,3 +87,24 @@ export async function updateTrip(req: Request, res: Response) {
     res.status(500).json({ error: error.message });
   }
 }
+
+// DELETE a trip
+export async function deleteTrip(req: Request, res: Response) {
+  try {
+    const tripId = Number(req.params.id);
+    if (!tripId) {
+      return res.status(400).json({ error: "Invalid trip ID" });
+    }
+
+    const trip = await tripService.deleteTrip(tripId);
+    if (!trip) {
+      return res.status(404).json({ error: "Trip not found" });
+    }
+
+    const response = tripDto.deleteTripResponseDto.fromEntity(trip);
+
+    res.json(response);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+}
