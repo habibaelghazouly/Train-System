@@ -25,15 +25,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/new/station",
+							"raw": "http://localhost:3000/stations/new",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"new",
-								"station"
+								"stations",
+								"new"
 							]
 						}
 					},
@@ -281,7 +281,101 @@
 					"name": "tripById",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/trips/23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"trips",
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Trip",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"stationId\" : 7 ,\r\n    \"trainId\" : 6 ,\r\n    \"stationOrder\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/trips/new",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"trips",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "trip",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"stationId\":7 ,\r\n    \"trainId\":6 ,\r\n    \"stationOrder\" :2\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/trips/23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"trips",
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "trip",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"stationId\":7 ,\r\n    \"trainId\":6 ,\r\n    \"stationOrder\" :2\r\n\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/trips/23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"trips",
+								"23"
+							]
+						}
 					},
 					"response": []
 				}
