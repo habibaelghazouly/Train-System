@@ -51,3 +51,25 @@ export  async function createStation(req: Request, res: Response) {
     res.status(500).json({ error: error.message });
   }
 }
+
+// UPDATE/edit station
+export async function updateStation(req: Request, res: Response) {
+  try {
+    const stationId = Number(req.params.id);
+    if (!stationId) {
+      return res.status(400).json({ error: "Invalid station ID" });
+    }
+
+    const { name } = req.body;
+    if (!name || typeof name !== "string" || name.trim() === "") {
+      return res.status(400).json({ error: "Station name is required" });
+    }
+
+    const station = await stationService.updateStation(stationId, { name: name?.trim() });
+    const response = stationDto.updateStationResponseDto.fromEntity(station);
+
+    res.json(response);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+}

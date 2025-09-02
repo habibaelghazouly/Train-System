@@ -29,9 +29,6 @@ export class getStationResponseDto {
   }
 }
 
-
-
-
 //POST new station
 import { Station } from "@prisma/client";
 
@@ -48,5 +45,20 @@ export class newStationResponseDto {
     return new newStationResponseDto(station.id, station.name);
   }
 
+}
+
+// UPDATE a station
+export class updateStationResponseDto {
+  id: number;
+  name: string;
+
+  constructor(station: any) {
+    this.id = station.id;
+    this.name = station.name;
+  }
+
+  static fromEntity(station: any): updateStationResponseDto {
+    return new updateStationResponseDto(station);
+  }
 }
 

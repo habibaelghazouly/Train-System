@@ -17,14 +17,17 @@ export async function getStationById(id: number) {
 
 // POST new station
 export async function addStation(data: { name: string }) {
-  try {
-    const station = await prisma.station.create({
-      data: {
-        name: data.name,
-      },
-    });
-    return station;
-  } catch (error) {
-    throw error; 
-  }
+  return prisma.station.create({
+    data: {
+      name: data.name,
+    },
+  });
+}
+
+// PATCH update/edit a station
+export async function updateStation(id: number, data: { name?: string }) {
+  return prisma.station.update({
+    where: { id },
+    data,
+  });
 }
