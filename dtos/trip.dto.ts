@@ -35,3 +35,23 @@ export class TripResponseDto {
     return trips.map(trip => new TripResponseDto(trip));
   }
 }
+
+// POST a trip
+export class newTripResponseDto {
+  id: number;
+  stationID: number;
+  trainID: number;
+  stationOrder: number;
+
+  constructor(trip: any) {
+    this.id = trip.id;
+    this.stationID = trip.station_id;
+    this.trainID = trip.train_id;
+    this.stationOrder = trip.station_order;
+  }
+
+  static fromEntity(trip: any): newTripResponseDto {
+    return new newTripResponseDto(trip);
+  }
+}
+  

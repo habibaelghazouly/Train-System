@@ -28,3 +28,14 @@ export async function findTrips(fromStationId: number, toStationId: number) {
     dest_city: toStationId,
   }));
 }
+
+// POST a trip
+export async function addTrip(data: { stationId: number; trainId: number; stationOrder: number }) {
+  return prisma.trip.create({
+    data: {
+      station_id: data.stationId,
+      train_id: data.trainId,
+      station_order: data.stationOrder,
+    },
+  });
+}
