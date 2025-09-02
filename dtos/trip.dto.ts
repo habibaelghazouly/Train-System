@@ -1,3 +1,23 @@
+// GET trip by id
+export class getTripResponseDto {
+  id: number;
+  stationID : number;
+  trainID : number;
+  station_order : number;
+
+  constructor(trip: any) {
+    this.id = trip.id;
+    this.stationID = trip.station_id
+    this.trainID = trip.train_id;
+    this.station_order = trip.station_order;
+  }
+
+  static fromEntity(trip: any): getTripResponseDto {
+    return new getTripResponseDto(trip);
+  }
+}
+
+// Get available trips
 export class TripResponseDto {
   train_id: number;
   train_name: string;

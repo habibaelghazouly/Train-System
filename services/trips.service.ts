@@ -1,5 +1,13 @@
 import prisma from "../prisma";
 
+// GET trip by id
+export async function getTripById(id: number) {
+  return prisma.trip.findUnique({
+    where: { id },
+  });
+}
+
+// GET available trips 
 export async function findTrips(fromStationId: number, toStationId: number) {
   
   const trains = await prisma.train.findMany({
