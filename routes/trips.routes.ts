@@ -1,8 +1,12 @@
 import { Router } from "express";
-import searchTrips  from "../controllers/trips.controller";
+import * as tripController  from "../controllers/trips.controller";
 
 const router = Router();
 
-router.get("/search", searchTrips);
+// GET available trips
+router.get("/search", tripController.searchTrips);
+
+// GET trip by ID
+router.get("/:id", tripController.getTrip);
 
 export default router;
