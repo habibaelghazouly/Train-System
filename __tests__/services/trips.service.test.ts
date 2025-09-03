@@ -1,6 +1,7 @@
-import { findTrips , getTripById } from "../../services/trips.service";
+import { addTrip, deleteTrip, findTrips , getTripById, updateTrip } from "../../services/trips.service";
 import prisma from "../../prisma";
 import { Train, Trip } from "@prisma/client";
+import { mock } from "node:test";
 
 jest.mock("../../prisma", () => ({
   __esModule: true,
@@ -10,6 +11,9 @@ jest.mock("../../prisma", () => ({
     },
     trip: {
       findUnique: jest.fn(),
+      delete: jest.fn(),
+      create: jest.fn(), 
+      update: jest.fn(),
     },
   },
 }));
@@ -145,5 +149,59 @@ describe("findTrips service", () => {
     trainFindMany.mockRejectedValue(new Error("DB error"));
 
     await expect(findTrips(fromStationId, toStationId)).rejects.toThrow("DB error");
+  });
+});
+
+// POST a trip 
+  describe("addTrip", () => {
+    it("should create a new trip", async () => {
+      const mockTrip = { id: 3, stationId: 1 , trainId :2 , stationOrder:3 };
+      (prisma.trip.create as jest.Mock).mockResolvedValue(mockTrip);
+
+      const result = await addTrip({ stationId: 1, trainId: 2, stationOrder: 3 });
+
+      expect(prisma.trip.create).toHaveBeenCalledWith({
+        data: { station_id: 1, train_id: 2, station_order: 3 },
+      });
+      expect(result).toEqual(mockTrip);
+    });
+  });
+
+// PATCH/edit a trip
+  describe("updateTrip", () => {
+    it("should update an existing trip", async () => {
+      const mockTrip = { id: 1, stationId: 1, trainId: 2, stationOrder: 3 };
+      (prisma.trip.update as jest.Mock).mockResolvedValue(mockTrip);
+
+      const result = await updateTrip(1, { stationId: 1, trainId: 2, stationOrder: 3 });
+
+      expect(prisma.trip.update).toHaveBeenCalledWith({
+        where: { id: 1 },
+        data: { station_id: 1, train_id: 2, station_order: 3 },
+      });
+      expect(result).toEqual(mockTrip);
+    });
+  });
+
+
+
+// DELETE a trip
+describe("deleteTrip", () => {
+  it("should delete a trip by id", async () => {
+    const mockTripData = { id: 1, stationId: 2, trainId: 3, stationOrder: 4 };
+    (prisma.trip.delete as jest.Mock).mockResolvedValue(mockTripData);
+
+    const result = await deleteTrip(1);
+
+    expect(prisma.trip.delete).toHaveBeenCalledWith({ where: { id: 1 } });
+    expect(result).toEqual(mockTripData);
+  });
+
+  it("should return null if trip not found", async () => {
+    (prisma.trip.delete as jest.Mock).mockResolvedValue(null);
+
+    const result = await deleteTrip(999);
+
+    expect(result).toBeNull();
   });
 });
