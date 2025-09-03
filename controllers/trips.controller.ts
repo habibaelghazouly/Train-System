@@ -46,3 +46,65 @@ export async function searchTrips(req: Request, res: Response) {
     res.status(500).json({ error: "Failed to fetch trips", details: error });
   }
 }
+
+// POST a trip
+
+export async function createTrip(req: Request, res: Response) {
+  try {
+    const { stationId , trainId , stationOrder } = req.body;
+
+    if (!stationId || !trainId || !stationOrder) {
+      return res.status(400).json({ error: "stationId, trainId and stationOrder are required" });
+    }
+
+    const trip = await tripService.addTrip({ stationId, trainId, stationOrder });
+    const response = tripDto.newTripResponseDto.fromEntity(trip);
+
+    res.status(201).json(response);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// PATCH a trip
+export async function updateTrip(req: Request, res: Response) {
+  try {
+    const tripId = Number(req.params.id);
+    if (!tripId) {
+      return res.status(400).json({ error: "Invalid trip ID" });
+    }
+
+    const { stationId, trainId, stationOrder } = req.body;
+    if (!stationId || !trainId || !stationOrder) {
+      return res.status(400).json({ error: "stationId, trainId and stationOrder are required" });
+    }
+
+    const trip = await tripService.updateTrip(tripId, { stationId, trainId, stationOrder });
+    const response = tripDto.updateTripResponseDto.fromEntity(trip);
+
+    res.json(response);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// DELETE a trip
+export async function deleteTrip(req: Request, res: Response) {
+  try {
+    const tripId = Number(req.params.id);
+    if (!tripId) {
+      return res.status(400).json({ error: "Invalid trip ID" });
+    }
+
+    const trip = await tripService.deleteTrip(tripId);
+    if (!trip) {
+      return res.status(404).json({ error: "Trip not found" });
+    }
+
+    const response = tripDto.deleteTripResponseDto.fromEntity(trip);
+
+    res.json(response);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+}

@@ -1,0 +1,526 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "TrainSystem",
+    "contact": {},
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Station"
+    },
+    {
+      "name": "Train"
+    },
+    {
+      "name": "Trip"
+    }
+  ],
+  "paths": {
+    "/stations/new": {
+      "post": {
+        "tags": [
+          "Station"
+        ],
+        "summary": "station",
+        "description": "station",
+        "operationId": "station",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/stations_new_body"
+              },
+              "examples": {
+                "station": {
+                  "value": {
+                    "name": "Mansoura"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/stations": {
+      "get": {
+        "tags": [
+          "Station"
+        ],
+        "summary": "allStations",
+        "description": "[http://localhost:3000/](http://localhost:3000/)",
+        "operationId": "allstations",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/stations/4": {
+      "get": {
+        "tags": [
+          "Station"
+        ],
+        "summary": "stationByID",
+        "description": "stationByID",
+        "operationId": "stationbyid",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/stations/5": {
+      "patch": {
+        "tags": [
+          "Station"
+        ],
+        "summary": "station",
+        "description": "station",
+        "operationId": "station1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/stations_5_body"
+              },
+              "examples": {
+                "station": {
+                  "value": {
+                    "name": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/stations/23": {
+      "delete": {
+        "tags": [
+          "Station"
+        ],
+        "summary": "station",
+        "description": "station",
+        "operationId": "station2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/stations_23_body"
+              },
+              "examples": {
+                "station": {
+                  "value": {
+                    "name": "Mansoura"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/new/train": {
+      "post": {
+        "tags": [
+          "Train"
+        ],
+        "summary": "train",
+        "description": "train",
+        "operationId": "train",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/new_train_body"
+              },
+              "examples": {
+                "train": {
+                  "value": {
+                    "name": "Train 8"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/trains": {
+      "get": {
+        "tags": [
+          "Train"
+        ],
+        "summary": "allTrains",
+        "description": "allTrains",
+        "operationId": "alltrains",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/train/8": {
+      "get": {
+        "tags": [
+          "Train"
+        ],
+        "summary": "trainByID",
+        "description": "trainByID",
+        "operationId": "trainbyid",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/trains/5": {
+      "patch": {
+        "tags": [
+          "Train"
+        ],
+        "summary": "train",
+        "description": "train",
+        "operationId": "train1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/trains_5_body"
+              },
+              "examples": {
+                "train": {
+                  "value": {
+                    "name": "Train 5"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/trains/7": {
+      "delete": {
+        "tags": [
+          "Train"
+        ],
+        "summary": "train",
+        "description": "train",
+        "operationId": "train2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/trains_7_body"
+              },
+              "examples": {
+                "train": {
+                  "value": {
+                    "name": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/trips/search": {
+      "get": {
+        "tags": [
+          "Trip"
+        ],
+        "summary": "availableTrips",
+        "description": "availableTrips",
+        "operationId": "availabletrips",
+        "parameters": [
+          {
+            "name": "fromStationId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          },
+          {
+            "name": "toStationId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "5"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/trips/23": {
+      "get": {
+        "tags": [
+          "Trip"
+        ],
+        "summary": "tripById",
+        "description": "tripById",
+        "operationId": "tripbyid",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Trip"
+        ],
+        "summary": "trip",
+        "description": "trip",
+        "operationId": "trip2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/trips_23_body"
+              },
+              "examples": {
+                "trip": {
+                  "value": {
+                    "stationId": 7,
+                    "stationOrder": 2,
+                    "trainId": 6
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Trip"
+        ],
+        "summary": "trip",
+        "description": "trip",
+        "operationId": "trip1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/trips_23_body_1"
+              },
+              "examples": {
+                "trip": {
+                  "value": {
+                    "stationId": 7,
+                    "stationOrder": 2,
+                    "trainId": 6
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/trips/new": {
+      "post": {
+        "tags": [
+          "Trip"
+        ],
+        "summary": "trip",
+        "description": "trip",
+        "operationId": "trip",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/trips_new_body"
+              },
+              "examples": {
+                "trip": {
+                  "value": {
+                    "stationId": 7,
+                    "stationOrder": 1,
+                    "trainId": 6
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "stations_new_body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Mansoura"
+          }
+        }
+      },
+      "stations_5_body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      },
+      "stations_23_body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Mansoura"
+          }
+        }
+      },
+      "new_train_body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Train 8"
+          }
+        }
+      },
+      "trains_5_body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Train 5"
+          }
+        }
+      },
+      "trains_7_body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      },
+      "trips_23_body": {
+        "type": "object",
+        "properties": {
+          "stationId": {
+            "type": "number",
+            "example": 7
+          },
+          "stationOrder": {
+            "type": "number",
+            "example": 2
+          },
+          "trainId": {
+            "type": "number",
+            "example": 6
+          }
+        }
+      },
+      "trips_23_body_1": {
+        "type": "object",
+        "properties": {
+          "stationId": {
+            "type": "number",
+            "example": 7
+          },
+          "stationOrder": {
+            "type": "number",
+            "example": 2
+          },
+          "trainId": {
+            "type": "number",
+            "example": 6
+          }
+        }
+      },
+      "trips_new_body": {
+        "type": "object",
+        "properties": {
+          "stationId": {
+            "type": "number",
+            "example": 7
+          },
+          "stationOrder": {
+            "type": "number",
+            "example": 1
+          },
+          "trainId": {
+            "type": "number",
+            "example": 6
+          }
+        }
+      }
+    }
+  }
+}

@@ -35,3 +35,54 @@ export class TripResponseDto {
     return trips.map(trip => new TripResponseDto(trip));
   }
 }
+
+// POST a trip
+export class newTripResponseDto {
+  id: number;
+  stationID: number;
+  trainID: number;
+  stationOrder: number;
+
+  constructor(trip: any) {
+    this.id = trip.id;
+    this.stationID = trip.station_id;
+    this.trainID = trip.train_id;
+    this.stationOrder = trip.station_order;
+  }
+
+  static fromEntity(trip: any): newTripResponseDto {
+    return new newTripResponseDto(trip);
+  }
+}
+  
+// PATCH/edit a trip
+export class updateTripResponseDto {
+  id: number;
+  stationID: number;
+  trainID: number;
+  stationOrder: number;
+
+  constructor(trip: any) {
+    this.id = trip.id;
+    this.stationID = trip.station_id;
+    this.trainID = trip.train_id;
+    this.stationOrder = trip.station_order;
+  }
+
+  static fromEntity(trip: any): updateTripResponseDto {
+    return new updateTripResponseDto(trip);
+  }
+}
+
+// DELETE a trip
+export class deleteTripResponseDto {
+  id: number;
+
+  constructor(trip: any) {
+    this.id = trip.id;
+  }
+
+  static fromEntity(trip: any): deleteTripResponseDto {
+    return new deleteTripResponseDto(trip);
+  }
+}
