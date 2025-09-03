@@ -67,3 +67,40 @@ describe('Trips Controller Integration', () => {
     expect(res.body).toEqual({ message: 'No trips found between the specified stations' });
   });
 });
+
+  // POST
+  it('POST /trips should create a trip', async () => {
+    const mockTrip = { id: 2, station_id: 1, train_id: 1, station_order: 1 };
+    jest.spyOn(tripService, 'addTrip').mockResolvedValue(mockTrip);
+
+    const res = await request(app)
+      .post('/trips/new')
+      .send({ stationId: 1, trainId: 1, stationOrder: 1 });
+    expect(res.status).toBe(201);
+    expect(res.body).toEqual(expect.objectContaining({ id: 2, stationID: 1, trainID: 1, stationOrder: 1 }));
+    
+  });
+
+  //  PATCH 
+  it('PATCH /trips/:id should update a trip', async () => {
+    const mockTrip = { id: 4, station_id: 1, train_id: 1, station_order: 1 };
+    jest.spyOn(tripService, 'updateTrip').mockResolvedValue(mockTrip);
+
+    const res = await request(app)
+      .patch('/trips/4')
+      .send({ stationId: 1, trainId: 1, stationOrder: 1 });
+
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual(expect.objectContaining({ id: 4, stationID: 1, trainID: 1, stationOrder: 1 }));
+  });
+  
+  // DELETE
+  it('DELETE /trips/:id should delete a trip', async () => {
+    const mockTripD = { id: 5, station_id: 1, train_id: 1, station_order: 1 };
+    jest.spyOn(tripService, 'deleteTrip').mockResolvedValue(mockTripD);
+
+    const res = await request(app).delete('/trips/5');
+
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ id: 5 });
+  });
