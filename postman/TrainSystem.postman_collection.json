@@ -4,14 +4,14 @@
 		"name": "TrainSystem",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "47859257",
-		"_collection_link": "https://habiba-houssam-s-team.postman.co/workspace/Team-Workspace~74b4d3c7-839f-4aaf-85ef-4c3059b0298b/collection/47859257-944d8e30-29f2-4cbf-89d8-ac779589a361?action=share&source=collection_link&creator=47859257"
+		"_collection_link": "https://habiba-houssam-s-team.postman.co/workspace/74b4d3c7-839f-4aaf-85ef-4c3059b0298b/collection/47859257-944d8e30-29f2-4cbf-89d8-ac779589a361?action=share&source=collection_link&creator=47859257"
 	},
 	"item": [
 		{
 			"name": "Station",
 			"item": [
 				{
-					"name": "newStation",
+					"name": "station",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -109,10 +109,26 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "station",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Mansoura\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/stations/23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stations",
+								"23"
+							]
+						}
 					},
 					"response": []
 				}
@@ -122,7 +138,7 @@
 			"name": "Train",
 			"item": [
 				{
-					"name": "newTrain",
+					"name": "train",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -190,7 +206,7 @@
 					"response": []
 				},
 				{
-					"name": "Train",
+					"name": "train",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -219,7 +235,7 @@
 					"response": []
 				},
 				{
-					"name": "Train",
+					"name": "train",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -298,7 +314,7 @@
 					"response": []
 				},
 				{
-					"name": "Trip",
+					"name": "trip",
 					"request": {
 						"method": "POST",
 						"header": [],
